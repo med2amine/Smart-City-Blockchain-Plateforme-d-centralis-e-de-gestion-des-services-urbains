@@ -1,7 +1,7 @@
 {
-  "address": "0x8cf8F1AB37404b280525b2d1C4baDda35943B9B5",
-  "network": "sepolia",
-  "chainId": 11155111,
+  "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "network": "localhost",
+  "chainId": 31337,
   "abi": [
     {
       "inputs": [],
