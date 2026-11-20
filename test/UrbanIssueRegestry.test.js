@@ -25,7 +25,7 @@ async function deployFixture() {
 
 async function withIssueFixture() {
   const base = await deployFixture();
-  await base.registry.connect(base.citizen).createIssue(...SAMPLE);
+  await base.registry.connect(base.citizen).createIssue(SAMPLE);
   return base;
 }
 
@@ -60,7 +60,7 @@ describe("UrbanIssueRegistry", function () {
   describe("Creating & reading issues", function () {
     it("creates an issue with status Reported and emits IssueCreated", async function () {
       const { registry, citizen } = await loadFixture(deployFixture);
-      await expect(registry.connect(citizen).createIssue(...SAMPLE))
+      await expect(registry.connect(citizen).createIssue(SAMPLE))
         .to.emit(registry, "IssueCreated")
         .withArgs(ID, citizen.address, "StreetLight", Priority.High);
 
@@ -76,7 +76,7 @@ describe("UrbanIssueRegistry", function () {
     it("rejects duplicate ids", async function () {
       const { registry, citizen } = await loadFixture(withIssueFixture);
       await expect(
-        registry.connect(citizen).createIssue(...SAMPLE)
+        registry.connect(citizen).createIssue(SAMPLE)
       ).to.be.revertedWith("Issue already exists");
     });
 
@@ -85,13 +85,13 @@ describe("UrbanIssueRegistry", function () {
       const bad = [...SAMPLE];
       bad[0] = "";
       await expect(
-        registry.connect(citizen).createIssue(...bad)
+        registry.connect(citizen).createIssue(bad)
       ).to.be.revertedWith("issueId required");
 
       const bad2 = [...SAMPLE];
       bad2[3] = "";
       await expect(
-        registry.connect(citizen).createIssue(...bad2)
+        registry.connect(citizen).createIssue(bad2)
       ).to.be.revertedWith("description required");
     });
 
@@ -104,7 +104,7 @@ describe("UrbanIssueRegistry", function () {
       const { registry, citizen } = await loadFixture(withIssueFixture);
       const second = [...SAMPLE];
       second[0] = "CITY-2026-002";
-      await registry.connect(citizen).createIssue(...second);
+      await registry.connect(citizen).createIssue(second);
       expect(await registry.getAllIssueIds()).to.deep.equal([ID, "CITY-2026-002"]);
     });
   });

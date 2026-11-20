@@ -25,6 +25,17 @@ contract UrbanIssueRegistry {
         uint256 updatedAt;   // block timestamp
     }
 
+    /// @dev Input of createIssue (a single struct avoids "stack too deep")
+    struct NewIssue {
+        string issueId;
+        string issueType;
+        string location;
+        string description;
+        string reportDate;
+        Priority priority;
+        string reportedBy;
+    }
+
     struct HistoryEntry {
         Status status;
         string assignedTo;
@@ -79,42 +90,32 @@ contract UrbanIssueRegistry {
         operators[operator] = false;
         emit OperatorRemoved(operator);
     }
-
     // Core features
+
     /// @notice Create a new issue (anyone can report). Initial status is Reported.
-    function createIssue(
-        string calldata issueId,
-        string calldata issueType,
-        string calldata location,
-        string calldata description,
-        string calldata reportDate,
-        Priority priority,
-        string calldata reportedBy
-    ) external {
-        require(bytes(issueId).length > 0, "issueId required");
-        require(!_exists(issueId), "Issue already exists");
-        require(bytes(issueType).length > 0, "issueType required");
-        require(bytes(location).length > 0, "location required");
-        require(bytes(description).length > 0, "description required");
+    function createIssue(NewIssue calldata input) external {
+        require(bytes(input.issueId).length > 0, "issueId required");
+        require(!_exists(input.issueId), "Issue already exists");
+        require(bytes(input.issueType).length > 0, "issueType required");
+        require(bytes(input.location).length > 0, "location required");
+        require(bytes(input.description).length > 0, "description required");
 
-        issues[issueId] = Issue({
-            issueId: issueId,
-            issueType: issueType,
-            location: location,
-            description: description,
-            reportDate: reportDate,
-            priority: priority,
-            reportedBy: reportedBy,
-            reporter: msg.sender,
-            assignedTo: "",
-            status: Status.Reported,
-            createdAt: block.timestamp,
-            updatedAt: block.timestamp
-        });
-        issueIds.push(issueId);
+        Issue storage issue = issues[input.issueId];
+        issue.issueId = input.issueId;
+        issue.issueType = input.issueType;
+        issue.location = input.location;
+        issue.description = input.description;
+        issue.reportDate = input.reportDate;
+        issue.priority = input.priority;
+        issue.reportedBy = input.reportedBy;
+        issue.reporter = msg.sender;
+        issue.status = Status.Reported;
+        issue.createdAt = block.timestamp;
+        issue.updatedAt = block.timestamp;
+        issueIds.push(input.issueId);
 
-        _record(issueId, Status.Reported, "", "Issue reported");
-        emit IssueCreated(issueId, msg.sender, issueType, priority);
+        _record(input.issueId, Status.Reported, "", "Issue reported");
+        emit IssueCreated(input.issueId, msg.sender, input.issueType, input.priority);
     }
 
     /// @notice Read one issue.
@@ -193,9 +194,7 @@ contract UrbanIssueRegistry {
         return _exists(issueId);
     }
 
-    // ------------------------------------------------------------------
     // Internal helpers
-    // ------------------------------------------------------------------
     function _exists(string memory issueId) internal view returns (bool) {
         return issues[issueId].createdAt != 0;
     }
