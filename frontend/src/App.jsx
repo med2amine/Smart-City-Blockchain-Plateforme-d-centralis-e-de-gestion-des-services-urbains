@@ -7,6 +7,7 @@ import ReportForm from "./components/ReportForm";
 import IssueList from "./components/IssueList";
 import ManagePanel from "./components/ManagePanel";
 import HistoryModal from "./components/HistoryModal";
+import ImportPanel from "./components/ImportPanel";
 
 const short = (a) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 
@@ -115,7 +116,7 @@ export default function App() {
       {w && !wrongChain && (
         <>
           <nav>
-            {[["issues", `Issues (${issues.length})`], ["report", "Report an issue"], ["manage", "Municipality"]].map(
+            {[["issues", `Issues (${issues.length})`], ["report", "Report an issue"], ["import", "Import Excel/CSV"], ["manage", "Municipality"]].map(
               ([k, label]) => (
                 <button key={k} className={tab === k ? "active" : ""} onClick={() => setTab(k)}>{label}</button>
               )
@@ -129,6 +130,9 @@ export default function App() {
               busy={busy}
               onSubmit={(p) => send("Report issue", (c) => c.createIssue(p))}
             />
+          )}
+          {tab === "import" && (
+            <ImportPanel contract={w.contract} issues={issues} onImported={() => refresh(w)} />
           )}
           {tab === "manage" && (
             <ManagePanel

@@ -1,0 +1,11 @@
+.imp-summary { margin: 4px 0 10px; }
+.imp-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+.imp-actions button:last-child { margin-left: auto; }
+.imp-error { color: #cf222e; margin: 10px 0 0; }
+.imp-done { margin: 0 0 10px; font-weight: 600; }
+.imp-msgs { font-size: .85rem; min-width: 190px; }
+.imp-msgs a { color: var(--accent); }
+.ok { color: #2da44e; } .bad { color: #cf222e; } .warn { color: #9a6700; } .info { color: #0969da; }
+tr.row-bad td { background: rgba(207, 34, 46, .08); }
+tr.row-warn td { background: rgba(154, 103, 0, .08); }
+tr.row-saved td { background: rgba(45, 164, 78, .12); }

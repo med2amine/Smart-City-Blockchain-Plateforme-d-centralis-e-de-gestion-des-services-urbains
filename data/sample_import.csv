@@ -1,0 +1,13 @@
+IssueID,IssueType,Location,Description,ReportDate,Priority,ReportedBy
+CITY-2026-101,StreetLight,Avenue Hassan II,Lamp post flickering all night,2026-11-18,High,Citizen04
+CITY-2026-102,Pothole,Rue de Tanger,Deep pothole damaging cars,2026-11-18,Critical,Citizen05
+CITY-2026-103,Garbage,Place du Marché,Bins not collected for 3 days,2026-11-19,Low,Citizen06
+CITY-2026-104,WaterLeak,Rue d'Espagne,Water leaking from main pipe,2026-11-19,Medium,Citizen07
+CITY-2026-105,Other,Parc Municipal,Broken bench near the entrance,2026-11-20,Medium,Citizen08
+CITY-2026-001,StreetLight,Avenue Mohammed V,Already on blockchain (duplicate),2026-11-19,High,Citizen01
+CITY-2026-106,Pothole,,Missing location,2026-11-19,Medium,Citizen09
+CITY-2026-107,Garbage,Rue de Fès,Invalid date example,19/13/2026,Low,Citizen10
+CITY-2026-108,Pothole,Boulevard Pasteur,Invalid priority example,2026-11-19,Urgent,Citizen11
+CITY-2026-109,Graffiti,Rue Ibn Battouta,Unknown type (warning only),2026-11-20,Low,Citizen12
+CITY-2026-101,StreetLight,Avenue Hassan II,Duplicate ID inside the file,2026-11-18,High,Citizen04
+,WaterLeak,Rue Sidi Bouabid,No ID: generated automatically,20/11/2026,High,Citizen13
